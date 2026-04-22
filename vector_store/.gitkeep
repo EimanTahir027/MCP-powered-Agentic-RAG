@@ -1,0 +1,2 @@
+# This file ensures the vector_store directory is tracked by Git.
+# Files uploaded to this folder will be used for the RAG vector database.

@@ -1,0 +1,81 @@
+# MCP Configuration for Agentic RAG System
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 1
+  log_level: "info"
+
+# Agent Configuration
+agent:
+  name: "rag-agent"
+  description: "Agentic RAG system with LLM reasoning"
+  max_tokens: 1024
+  temperature: 0.7
+
+# LLM Configuration (Ollama)
+llm:
+  provider: "ollama"
+  url: "http://localhost:11434"
+  model: "mistral"  # Options: mistral, llama3, neural-chat, etc.
+  timeout: 120
+  retry_attempts: 3
+
+# Vector Store Configuration (ChromaDB)
+vector_store:
+  type: "chromadb"
+  persist_dir: "./vector_store"
+  collection_name: "documents"
+  embedding_model: "all-MiniLM-L6-v2"
+  similarity_metric: "cosine"
+
+# RAG Configuration
+rag:
+  retrieval_method: "semantic_search"
+  n_results_default: 3
+  n_results_max: 10
+  context_injection: true
+  include_metadata: true
+
+# Tools Configuration
+tools:
+  document_search:
+    enabled: true
+    description: "Search over documents in vector store"
+  
+  web_search:
+    enabled: false
+    description: "Web search tool for fallback queries"
+    api_key: "${WEB_SEARCH_API_KEY}"
+
+# Document Processing
+document_processing:
+  supported_formats:
+    - ".txt"
+    - ".pdf"
+    - ".docx"
+    - ".md"
+  chunk_size: 512
+  chunk_overlap: 50
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/rag_agent.log"
+
+# Security
+security:
+  enable_auth: false
+  max_requests_per_minute: 60
+  allowed_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8501"
+
+# Frontend (Streamlit)
+streamlit:
+  enabled: true
+  port: 8501
+  theme: "light"
